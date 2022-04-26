@@ -1,6 +1,6 @@
-# OSCA - Open-Source Crypto ATM
+# OSCA - Open-Source Bitcoin Cash ATM
 
-The Open-Source Crypto ATM, a Bitcoin ATM that someone with minimal electro-mechanical skill can build at home with parts from Amazon and hardware from Lowes. OSCA does not require you to disclose any personal information to use this ATM. The user inserts cash and the machine returns a cold wallet loaded with the desired amount of crypto-currency.
+The Open-Source Bitcoin Cash ATM, a Bitcoin Cash ATM that someone with minimal electro-mechanical skill can build at home with parts from Amazon and hardware from Lowes. OSBA does not require you to disclose any personal information to use this ATM. The user inserts cash and the machine returns a cold wallet loaded with the desired amount of Bitcoin Cash.
 
   
 *This project is still in beta and is in active development.*
@@ -20,17 +20,17 @@ Detailed step-by-step instructions and a video tutorial are coming soon. However
 
 ### Usecases
 
-- Accept Bitcoin - Want to accept Bitcoin at your business? Use OSCA to provide your customers a easy way to purchase Bitcoin
+- Accept Bitcoin Cash - Want to accept Bitcoin Cash at your business? Use OSBA to provide your customers a easy way to purchase Bitcoin Cash without a middle man.
 
 - Passive Income - Use the commission feature to earn a commission on each transaction.
   
-- Fungibility - Make crypto more fungibile by allowing anyone to anonymously convert hard fiat currency into cryptocurrency.
+- Fungibility - Make Bitcoin Cash more fungibile by allowing anyone to anonymously convert hard fiat currency into Bitcoin Cash.
 
   
 
 ### How does it work?
 
-OSCA is very simple to use. Simply insert the amount of cash you would like converted to Bitcoin then press the blue flashing button. 
+OSBA is very simple to use. Simply insert the amount of cash you would like converted to Bitcoin then press the blue flashing button. 
 
 <p align="center">
     <img  width="400"  src="https://github.com/jettscythe/OSBCHATM/blob/master/misc/demo.gif?raw=true" alt="Demo">
@@ -45,11 +45,13 @@ A paper wallet will be printed that is loaded with the desired amount of Bitcoin
 
 ### Motivation
 
-Bitcoin and crypto in general have the power to revolutionise finance. However anonymously converting fiat currency into crypto is becoming harder and harder. All of the major crypto exchanges require disclosure of personal identifiable information. Even the Bitcoin ATMs at your local gas station require a cell phone number and an email address. Crypto-currencies are so much of a threat to the legacy banking system that the UK has banned Bitcoin ATMs outright. This concerns me because I believe if we remain on this course open-source technology like blockchain will become heavily regulated and corporatized.
+The orginially Github was discovered on r/bitcoin by u/SoiledCold5 the day it was released. The orginially github and it's creator made it solely for Bitcoin but as days went by, it was left dormant with little to no adoption by users. The problem was that Bitcoin Core is not built to be a currency due to it's high fees and long wait times. Eventually u/SoiledCold5 made a request on the Bitcoin Cash telegram to fork the orginial Git to make it for Bitcoin Cash.
+
+Bitcoin Cash has power to revolutionise finance. However anonymously converting fiat currency into crypto is becoming harder and harder. All of the major crypto exchanges require disclosure of personal identifiable information. Even the Bitcoin ATMs at your local gas station require a cell phone number and an email address. Crypto-currencies are so much of a threat to the legacy banking system that the UK has banned Bitcoin ATMs outright. This concerns me because I believe if we remain on this course open-source technology like blockchain will become heavily regulated and corporatized.
 
   
 
-The Open-Source Crypto ATM aims to remedy these issues by making it safe, easy and anonymous for anyone to convert hard fiat currency into digital cryptocurrency. The machine has been deliberately designed so someone with minimal electro-mechanical skill can build this ATM at home with a few off the shelf electronics and trip to the local hardware store.
+The Open-Source Bitcoin Cash ATM aims to remedy these issues by making it safe, easy and anonymous for anyone to convert hard fiat currency into digital cryptocurrency. The machine has been deliberately designed so someone with minimal electro-mechanical skill can build this ATM at home with a few off the shelf electronics and trip to the local hardware store.
 
   
 
@@ -78,6 +80,6 @@ Consider the Venn diagram of the parameters of this project. A) It must be easy 
 
   
 
-#### Why Bitcoin? Why not Monero or Ethereum?
+#### Why ~~Bitcoin~~ Bitcoin Cash? 
 
-For better or for worse Bitcoin is the poster-child cryptocurrency. Its over a decade old, I bet your grandparents have heard about it at this point. Therefore I feel like that was the best cryptocurrency to start with.
+https://whybitcoincash.com/
