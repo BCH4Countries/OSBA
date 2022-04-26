@@ -1,8 +1,5 @@
 from webbrowser import get
-from bitcoinlib.mnemonic import Mnemonic
-from bitcoinlib.wallets import Wallet
-from bitcoinlib.keys import HDKey
-from bitcoinlib.keys import Key
+from bitcash import PrivateKey, Key
 from dotenv import load_dotenv
 from appJar import gui
 from appJar.appjar import WIDGET_NAMES
@@ -61,9 +58,9 @@ bchBuyPrice = False
 while not (bch and bchBuyPrice):
     try:
         log(f'Updating BCH price')
-        bchValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value=1')
+        bchValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value=1') # TODO: replace URL
         bch = float(bchValueRequest.text)
-        bchBuyPriceRequest = requests.get(f'https://blockchain.info/ticker')
+        bchBuyPriceRequest = requests.get(f'https://blockchain.info/ticker') # TODO: replace URL
         ticker = json.loads(bchBuyPriceRequest.text)
         bchBuyPrice = ticker['USD']['buy']
         log(f'$1 USD = ₿ {bch}')
@@ -74,12 +71,8 @@ while not (bch and bchBuyPrice):
 
 # Init ATM wallet
 log(f'Loading ATM wallet')
-walletName = 'MAIN-'+''.join(random.choices(string.ascii_lowercase, k=10))
-seed = Mnemonic().to_seed(os.environ.get('MAIN_SEED')).hex()
-mainKey = HDKey().from_seed(seed)
-mainWallet = Wallet.create(walletName, mainKey)
-mainWallet.scan(scan_gap_limit=5)
-balance = str(mainWallet.balance())
+mainWallet = Key(os.environ.get('MAIN_PRIVATE_KEY'))
+balance = str(mainWallet.get_balance('bch'))
 log(f'ATM wallet balance: ₿{balance}')
 
 app = gui("ATM", os.environ.get('DISPLAY_SIZE', 'fullscreen'))
@@ -147,7 +140,7 @@ def createWallet():
     log(f'createWallet()')
 
     outputKey = Key()
-    outputKeyAddress = outputKey.address()
+    outputKeyAddress = outputKey.address
     outputName = ''.join(random.choices(string.ascii_lowercase, k=10))
     app.setLabel('line2', f'Signing Transaction...')
     shouldCreateTX = True
@@ -164,18 +157,13 @@ def createTX():
     credit_ = creditSubtractPremium()
     log(f'credit: {credit}')
     log(f'crediwtSubtractPremium: {credit_}')
-    bchCreditValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value={credit_}')
+    bchCreditValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value={credit_}') # TODO: replace URL
     outputBCH = bchCreditValueRequest.text
     log(f'profit: {credit - credit_}')
     log(f'creditSubtractPremium as BCH: {outputBCH}')
 
     # Make Transaction
-    tx = mainWallet.send_to(outputKeyAddress, str(outputBCH)+' BCH')
-    tx.info()
-    export = tx.export()
-    if (export[0]):
-        outputTXString = export[0][1]
-    
+    outputTXString = mainWallet.create_transaction([(outputKeyAddress, outputBCH, 'bch')])
     app.setLabel('line2', f'Printing Recipt...')
     shouldPrint = True
     
@@ -197,11 +185,11 @@ def printWallet():
     os.system(f'cp ./wallet/background.jpeg ./output/{outputName}')
     os.system(f'cp ./wallet/ticketing.ttf ./output/{outputName}')
 
-    privateKey = outputKey.wif()
+    privateKey = outputKey
 
     publicKeyQR = qrcode.make(outputKeyAddress)
     publicKeyQR.save(f'./output/{outputName}/public.png')
-    statusQR = qrcode.make(f'https://www.blockchain.com/bch/tx/{outputTXString}')
+    statusQR = qrcode.make(f'https://www.blockchain.com/bch/tx/{outputTXString}') # TODO: replace URL
     statusQR.save(f'./output/{outputName}/status.png')
     privateKeyQR = qrcode.make(privateKey)
     privateKeyQR.save(f'./output/{outputName}/private.png')
@@ -229,7 +217,7 @@ def printWallet():
     os.system(f'rm -rf ./output/{outputName}')
     
     # Reset UI
-    updateBCHBuyPriceRequest = requests.get(f'https://blockchain.info/ticker')
+    updateBCHBuyPriceRequest = requests.get(f'https://blockchain.info/ticker') # TODO: replace URL
     ticker = json.loads(updateBCHBuyPriceRequest.text)
     bchBuyPrice = ticker['USD']['buy']
     app.setFont(size=50)
@@ -240,9 +228,7 @@ def printWallet():
     app.setLabel('line3', '1 BCH = $' + str(bchBuyPrice))
 
     # Update balance
-    mainWallet.scan(scan_gap_limit=5)
-    mainWallet.transactions_update_confirmations()
-    balance = str(mainWallet.balance())
+    balance = str(mainWallet.get_balance('bch'))
     log(f'ATM wallet balance: ₿{balance}')
 
     # Reset output varibales
@@ -266,7 +252,7 @@ app.setFg("white")
 app.registerEvent(serialLoop)
 app.setStretch('both')
 app.setSticky('news')
-app.addLabel('line1', 'Open-Source Bitcoin ATM')
+app.addLabel('line1', 'Open-Source Bitcoin Cash (BCH) ATM')
 app.addLabel('line2', 'Insert Cash To Begin')
 app.addLabel('line3', '1 BCH = $' + str(bchBuyPrice))
 app.go()
