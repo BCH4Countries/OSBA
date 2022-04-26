@@ -7,7 +7,7 @@ The Open-Source Crypto ATM, a Bitcoin ATM that someone with minimal electro-mech
   
 
 <p align="center">
-    <img width="350"  src="https://github.com/anthonybudd/Open-Source-Crypto-ATM/blob/master/misc/osca.jpg?raw=true"  alt="OSCA">
+    <img width="350"  src="https://github.com/jettscythe/OSBCHATM/blob/master/misc/osca.jpg?raw=true"  alt="OSCA">
 </p>
 
   
@@ -15,7 +15,7 @@ The Open-Source Crypto ATM, a Bitcoin ATM that someone with minimal electro-mech
 
 ### Instructions
 Detailed step-by-step instructions and a video tutorial are coming soon. However you can find all of the software and plans in this repo.
-- [Build Instructions](https://github.com/anthonybudd/Open-Source-Crypto-ATM/blob/master/instructions/Instructions.md)
+- [Build Instructions](https://github.com/jettscythe/OSBCHATM/blob/master/instructions/Instructions.md)
 
 
 ### Usecases
@@ -33,13 +33,13 @@ Detailed step-by-step instructions and a video tutorial are coming soon. However
 OSCA is very simple to use. Simply insert the amount of cash you would like converted to Bitcoin then press the blue flashing button. 
 
 <p align="center">
-    <img  width="400"  src="https://github.com/anthonybudd/Open-Source-Crypto-ATM/blob/master/misc/demo.gif?raw=true" alt="Demo">
+    <img  width="400"  src="https://github.com/jettscythe/OSBCHATM/blob/master/misc/demo.gif?raw=true" alt="Demo">
 </p>
 
 A paper wallet will be printed that is loaded with the desired amount of Bitcoin. Scan the status QR code to see your transaction on blockchain. Scan the withdraw QR code on the right to sweep the paper wallet. 
 
 <p align="center">
-    <img  width="400"  src="https://github.com/anthonybudd/Open-Source-Crypto-ATM/blob/master/misc/wallet.gif?raw=true" alt="Demo">
+    <img  width="400"  src="https://github.com/jettscythe/OSBCHATM/blob/master/misc/wallet.gif?raw=true" alt="Demo">
 </p>
   
 
