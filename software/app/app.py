@@ -46,7 +46,7 @@ credit_ = 0
 apex = serial.Serial(port='/dev/ttyUSB0', baudrate=9600, timeout=1)
 
 # Output Varibles
-outputBTC = ""
+outputBCH = ""
 outputName = ""
 outputKey = False
 outputKeyAddress = ""
@@ -55,21 +55,21 @@ shouldPrint = False
 shouldCreateTX = False
 shouldCreateWallet = False
 
-# BTC Prices
-btc = False
-btcBuyPrice = False
-while not (btc and btcBuyPrice):
+# BCH Prices
+bch = False
+bchBuyPrice = False
+while not (bch and bchBuyPrice):
     try:
-        log(f'Updating BTC price')
-        btcValueRequest = requests.get(f'https://blockchain.info/tobtc?currency=USD&value=1')
-        btc = float(btcValueRequest.text)
-        btcBuyPriceRequest = requests.get(f'https://blockchain.info/ticker')
-        ticker = json.loads(btcBuyPriceRequest.text)
-        btcBuyPrice = ticker['USD']['buy']
-        log(f'$1 USD = ₿ {btc}')
-        log(f'₿ 1 = $USD {str(btcBuyPrice)}')
+        log(f'Updating BCH price')
+        bchValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value=1')
+        bch = float(bchValueRequest.text)
+        bchBuyPriceRequest = requests.get(f'https://blockchain.info/ticker')
+        ticker = json.loads(bchBuyPriceRequest.text)
+        bchBuyPrice = ticker['USD']['buy']
+        log(f'$1 USD = ₿ {bch}')
+        log(f'₿ 1 = $USD {str(bchBuyPrice)}')
     except:
-        print("An exception occurred while getting BTC Prices")
+        print("An exception occurred while getting BCH Prices")
         time.sleep(5)
 
 # Init ATM wallet
@@ -89,7 +89,7 @@ def serialLoop():
     global shouldCreateTX
     global shouldCreateWallet
     global credit
-    global btc
+    global bch
 
     # AB: Very poor code, imporve. I should have used electron.
     if (shouldPrint):
@@ -129,8 +129,8 @@ def serialLoop():
             app.setLabel('line3', 'Premium: ' + str(premiumRate*100) + '%')
             app.setLabel('line1', '$'+str(credit))
             credit_ = creditSubtractPremium()
-            btc_ = btc*credit_
-            app.setLabel('line2', f'≈ ₿{btc_:.8f}')
+            bch_ = bch*credit_
+            app.setLabel('line2', f'≈ ₿{bch_:.8f}')
             
         if (input == 'PRINT'):
             app.hideWidgetType(WIDGET_NAMES.Label, 'line1')
@@ -156,21 +156,21 @@ def createTX():
     global shouldPrint
     global outputTXString
     global outputKeyAddress
-    global outputBTC
+    global outputBCH
     global credit
     log(f'createTX()')
 
-    # Calculate outputBTC
+    # Calculate outputBCH
     credit_ = creditSubtractPremium()
     log(f'credit: {credit}')
     log(f'crediwtSubtractPremium: {credit_}')
-    btcCreditValueRequest = requests.get(f'https://blockchain.info/tobtc?currency=USD&value={credit_}')
-    outputBTC = btcCreditValueRequest.text
+    bchCreditValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value={credit_}')
+    outputBCH = bchCreditValueRequest.text
     log(f'profit: {credit - credit_}')
-    log(f'creditSubtractPremium as BTC: {outputBTC}')
+    log(f'creditSubtractPremium as BCH: {outputBCH}')
 
     # Make Transaction
-    tx = mainWallet.send_to(outputKeyAddress, str(outputBTC)+' BTC')
+    tx = mainWallet.send_to(outputKeyAddress, str(outputBCH)+' BCH')
     tx.info()
     export = tx.export()
     if (export[0]):
@@ -180,11 +180,11 @@ def createTX():
     shouldPrint = True
     
 def printWallet():
-    global btcBuyPrice
+    global bchBuyPrice
     global credit
     global outputName
     global outputKey
-    global outputBTC
+    global outputBCH
     global outputKeyAddress
     global outputTXString
     global outputShouldPrint
@@ -201,14 +201,14 @@ def printWallet():
 
     publicKeyQR = qrcode.make(outputKeyAddress)
     publicKeyQR.save(f'./output/{outputName}/public.png')
-    statusQR = qrcode.make(f'https://www.blockchain.com/btc/tx/{outputTXString}')
+    statusQR = qrcode.make(f'https://www.blockchain.com/bch/tx/{outputTXString}')
     statusQR.save(f'./output/{outputName}/status.png')
     privateKeyQR = qrcode.make(privateKey)
     privateKeyQR.save(f'./output/{outputName}/private.png')
 
     with open(f'./output/{outputName}/index.html', 'r') as file:
         data = file.read()
-        data = data.replace('[BTC]', f'₿{float(outputBTC):.8f}')
+        data = data.replace('[BCH]', f'₿{float(outputBCH):.8f}')
         data = data.replace('[CURRENCY]', 'BITCOIN')
         data = data.replace('[TIME]', f"{datetime.datetime.now():%I:%M:%S}")
         data = data.replace('[DATE]', f"{datetime.datetime.now():%Y-%m-%d}")
@@ -229,15 +229,15 @@ def printWallet():
     os.system(f'rm -rf ./output/{outputName}')
     
     # Reset UI
-    updateBTCBuyPriceRequest = requests.get(f'https://blockchain.info/ticker')
-    ticker = json.loads(updateBTCBuyPriceRequest.text)
-    btcBuyPrice = ticker['USD']['buy']
+    updateBCHBuyPriceRequest = requests.get(f'https://blockchain.info/ticker')
+    ticker = json.loads(updateBCHBuyPriceRequest.text)
+    bchBuyPrice = ticker['USD']['buy']
     app.setFont(size=50)
     app.showWidgetType(WIDGET_NAMES.Label, 'line1')
     app.showWidgetType(WIDGET_NAMES.Label, 'line3')
     app.setLabel('line1', 'Open-Source Bitcoin ATM')
     app.setLabel('line2', 'Insert Cash To Begin')
-    app.setLabel('line3', '1 BTC = $' + str(btcBuyPrice))
+    app.setLabel('line3', '1 BCH = $' + str(bchBuyPrice))
 
     # Update balance
     mainWallet.scan(scan_gap_limit=5)
@@ -246,7 +246,7 @@ def printWallet():
     log(f'ATM wallet balance: ₿{balance}')
 
     # Reset output varibales
-    outputBTC = ""
+    outputBCH = ""
     outputName = ""
     outputKey = False
     outputKeyAddress = ""
@@ -268,5 +268,5 @@ app.setStretch('both')
 app.setSticky('news')
 app.addLabel('line1', 'Open-Source Bitcoin ATM')
 app.addLabel('line2', 'Insert Cash To Begin')
-app.addLabel('line3', '1 BTC = $' + str(btcBuyPrice))
+app.addLabel('line3', '1 BCH = $' + str(bchBuyPrice))
 app.go()
