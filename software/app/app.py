@@ -1,5 +1,7 @@
 from webbrowser import get
 from bitcash import PrivateKey, Key
+from bitcash.format import hex_to_wif
+from bitcash.network import currency_to_satoshi_cached, satoshi_to_currency_cached
 from dotenv import load_dotenv
 from appJar import gui
 from appJar.appjar import WIDGET_NAMES
@@ -58,12 +60,9 @@ bchBuyPrice = False
 while not (bch and bchBuyPrice):
     try:
         log(f'Updating BCH price')
-        bchValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value=1') # TODO: replace URL
-        bch = float(bchValueRequest.text)
-        bchBuyPriceRequest = requests.get(f'https://blockchain.info/ticker') # TODO: replace URL
-        ticker = json.loads(bchBuyPriceRequest.text)
-        bchBuyPrice = ticker['USD']['buy']
-        log(f'$1 USD = ₿ {bch}')
+        bchValue = currency_to_satoshi_cached(1, 'usd')
+        bchBuyPrice = satoshi_to_currency_cached(100000000, 'usd')
+        log(f'$1 USD = ₿ {bchValue}')
         log(f'₿ 1 = $USD {str(bchBuyPrice)}')
     except:
         print("An exception occurred while getting BCH Prices")
@@ -156,8 +155,8 @@ def createTX():
     # Calculate outputBCH
     credit_ = creditSubtractPremium()
     log(f'credit: {credit}')
-    log(f'crediwtSubtractPremium: {credit_}')
-    bchCreditValueRequest = requests.get(f'https://blockchain.info/tobch?currency=USD&value={credit_}') # TODO: replace URL
+    log(f'creditSubtractPremium: {credit_}')
+    bchCreditValueRequest = currency_to_satoshi_cached(credit_, 'usd')
     outputBCH = bchCreditValueRequest.text
     log(f'profit: {credit - credit_}')
     log(f'creditSubtractPremium as BCH: {outputBCH}')
@@ -185,7 +184,7 @@ def printWallet():
     os.system(f'cp ./wallet/background.jpeg ./output/{outputName}')
     os.system(f'cp ./wallet/ticketing.ttf ./output/{outputName}')
 
-    privateKey = outputKey
+    privateKey = hex_to_wif(outputKey.to_hex(), compressed=False)
 
     publicKeyQR = qrcode.make(outputKeyAddress)
     publicKeyQR.save(f'./output/{outputName}/public.png')
@@ -217,9 +216,8 @@ def printWallet():
     os.system(f'rm -rf ./output/{outputName}')
     
     # Reset UI
-    updateBCHBuyPriceRequest = requests.get(f'https://blockchain.info/ticker') # TODO: replace URL
-    ticker = json.loads(updateBCHBuyPriceRequest.text)
-    bchBuyPrice = ticker['USD']['buy']
+    updateBCHBuyPrice = satoshi_to_currency_cached(100000000, 'usd')
+    bchBuyPrice = updateBCHBuyPrice
     app.setFont(size=50)
     app.showWidgetType(WIDGET_NAMES.Label, 'line1')
     app.showWidgetType(WIDGET_NAMES.Label, 'line3')
