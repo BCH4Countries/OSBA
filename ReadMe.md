@@ -38,7 +38,7 @@ A paper wallet will be printed that is loaded with the desired amount of Bitcoin
 
 ### Motivation
 
-The orginially Github was discovered on r/bitcoin by u/SoiledCold5 the day it was released. The orginially github and it's creator made it solely for Bitcoin but as days went by, it was left dormant with little to no adoption by users. The problem was that Bitcoin Core is not built to be a currency due to it's high fees and long wait times. Eventually u/SoiledCold5 made a request on the Bitcoin Cash telegram to fork the orginial Git to make it for Bitcoin Cash.
+The original Github was discovered on r/bitcoin by u/SoiledCold5 the day it was released. The orginially github and it's creator made it solely for Bitcoin but as days went by, it was left dormant with little to no adoption by users. The problem was that Bitcoin Core is not built to be a currency due to it's high fees and long wait times. Eventually u/SoiledCold5 made a request on the Bitcoin Cash telegram to fork the orginial Git to make it for Bitcoin Cash.
 
 Bitcoin Cash has power to revolutionise finance. However anonymously converting fiat currency into crypto is becoming harder and harder. All of the major crypto exchanges require disclosure of personal identifiable information. Even the Bitcoin ATMs at your local gas station require a cell phone number and an email address. Crypto-currencies are so much of a threat to the legacy banking system that the UK has banned Bitcoin ATMs outright. This concerns me because I believe if we remain on this course open-source technology like blockchain will become heavily regulated and corporatized.
 
