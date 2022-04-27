@@ -5,10 +5,12 @@ description = "Open source Bitcoin Cash (BCH) ATM"
 authors = ["Your Name <you@example.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "3.10.0"
 BitCash = "^0.6.6"
 qrcode = "^7.3.1"
 python-dotenv = "^0.20.0"
+appJar = "^0.94.0"
+pyserial = "^3.5"
 
 [tool.poetry.dev-dependencies]
 ipython = "<8"

@@ -1,2 +1,5 @@
 .env
 dev.py
+logs/*
+output/*
+wallet/*

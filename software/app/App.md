@@ -4,6 +4,8 @@
 
 
 sudo apt-get install wkhtmltopdf
+sudo apt-get install python3.10-tk
+poetry shell
 poetry install
 
 set disable_overscan=1 in /boot/config.txt
