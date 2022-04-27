@@ -1,4 +1,4 @@
-# OSCA - Open-Source Bitcoin Cash ATM
+# OSBA - Open-Source Bitcoin Cash ATM
 
 The Open-Source Bitcoin Cash ATM, a Bitcoin Cash ATM that someone with minimal electro-mechanical skill can build at home with parts from Amazon and hardware from Lowes. OSBA does not require you to disclose any personal information to use this ATM. The user inserts cash and the machine returns a cold wallet loaded with the desired amount of Bitcoin Cash.
 
