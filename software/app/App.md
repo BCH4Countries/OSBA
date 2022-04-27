@@ -4,9 +4,7 @@
 
 
 sudo apt-get install wkhtmltopdf
-pip3 install bitcoinlib
-pip3 install qrcode
-pip3 install python-dotenv
+poetry install
 
 set disable_overscan=1 in /boot/config.txt
 
