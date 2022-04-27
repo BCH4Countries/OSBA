@@ -1,6 +1,6 @@
 from webbrowser import get
 from bitcash import PrivateKey, Key
-from bitcash.format import hex_to_wif
+from bitcash.format import bytes_to_wif
 from bitcash.network import currency_to_satoshi_cached, satoshi_to_currency_cached
 from dotenv import load_dotenv
 from appJar import gui
@@ -24,8 +24,8 @@ def log(msg):
     if (msg == ''): return
     day = f"{datetime.datetime.now():%d}"
     month = f"{datetime.datetime.now():%m}"
-    logDir = f'./logs/{month}/'
-    logFile = f'./logs/{month}/{day}.txt'
+    logDir = f'{LOG_PATH}/logs/{month}/'
+    logFile = f'{LOG_PATH}/logs/{month}/{day}.txt'
     if not (os.path.isdir(logDir)):
         os.mkdir(logDir)
     logFileObject = open(logFile, 'a')
@@ -36,6 +36,7 @@ def log(msg):
 
 
 load_dotenv()
+LOG_PATH = os.environ.get('LOG_BASE_PATH', "/home/ATMLOGS")
 log('Starting...')
 time.sleep(10)
 log('Started')
@@ -184,7 +185,7 @@ def printWallet():
     os.system(f'cp ./wallet/background.jpeg ./output/{outputName}')
     os.system(f'cp ./wallet/ticketing.ttf ./output/{outputName}')
 
-    privateKey = hex_to_wif(outputKey.to_hex(), compressed=False)
+    privateKey = bytes_to_wif(outputKey.to_hex(), compressed=False)
 
     publicKeyQR = qrcode.make(outputKeyAddress)
     publicKeyQR.save(f'./output/{outputName}/public.png')
